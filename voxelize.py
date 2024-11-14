@@ -17,9 +17,7 @@ def voxelize(mesh, voxel_size):
     grid_shape = ((max_bound - min_bound) / voxel_size).astype(int) + 1
     grid = np.zeros(grid_shape, dtype=bool)
     
-    # Place triangles into the voxel grid
     for triangle in mesh.vectors:
-        # Get the voxel space indices for the vertices of the triangle
         triangle_min = np.floor((triangle.min(axis=0) - min_bound) / voxel_size).astype(int)
         triangle_max = np.ceil((triangle.max(axis=0) - min_bound) / voxel_size).astype(int)
         
