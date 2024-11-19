@@ -50,7 +50,7 @@ def export_to_csv(grid, min_bound, voxel_size, output_file):
             for y in range(grid.shape[1]):
                 for z in range(grid.shape[2]):
                     if grid[x, y, z]:
-                        coord = min_bound + np.array([x, y, z]) * voxel_size
+                        coord = np.array([x, y, z])
                         writer.writerow(coord)
 
 def main():
