@@ -56,7 +56,7 @@ def export_to_csv(grid, min_bound, voxel_size, output_file):
 def main():
     file_path = 'test.stl'
     output_file = 'voxel.csv'
-    voxel_size = 1.0
+    voxel_size = 5.0
     
     stl_mesh = read_stl(file_path)
     grid, min_bound = voxelize(stl_mesh, voxel_size)

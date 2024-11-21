@@ -82,17 +82,14 @@ def write_bom_to_csv(bom, output_file_path):
 
 # Main script
 def main():
-    input_csv_path = "Test_Brick_v1_voxel_2_parts.csv"  # CSV Input
-    output_csv_path = "Test_Brick_v1_voxel_2_parts_bom.csv"  # CSV Output
+    input_csv_path = "lego_parts.csv"
+    output_csv_path = "bom.csv"
     
     try:
-        # Read parts and count occurrences
         part_counts = read_parts_from_csv(input_csv_path)
         
-        # Generate the BOM
         bom = generate_bom(part_counts)
         
-        # Write the BOM to a new CSV
         write_bom_to_csv(bom, output_csv_path)
         print(f"BOM has been successfully written to {output_csv_path}")
     

@@ -30,6 +30,6 @@ def load_lego_data(csv_file):
     lego_df = pd.read_csv(csv_file)
     return lego_df
 
-csv_file = 'parts_list(voxelcsv).csv' 
+csv_file = 'lego_parts.csv' 
 lego_df = load_lego_data(csv_file)
 visualize_lego(lego_df)

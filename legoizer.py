@@ -8,7 +8,6 @@ Created on Tue Nov 19 17:23:40 2024
 import csv
 import math
 
-# Define the part dictionary with part IDs and their shapes
 part_Dict = {
     
     # 5 x N
@@ -74,8 +73,8 @@ def find_largest_part(voxel, x, y, z):
     Returns the part ID, shape, and coordinates it covers.
     """
     for ID, shape in sorted(part_Dict.items(), key=lambda x: len(x[1]) * len(x[1][0]), reverse=True):
-        shape_height = len(shape)      # Number of rows in the shape (z-dimension)
-        shape_width = len(shape[0])    # Number of columns in each row (x-dimension)
+        shape_height = len(shape)
+        shape_width = len(shape[0])
 
         # Check if shape fits at the current location
         if all(
@@ -83,16 +82,14 @@ def find_largest_part(voxel, x, y, z):
             y + dy < len(voxel[z + dz]) and
             x + dx < len(voxel[z + dz][y + dy]) and
             voxel[z + dz][y + dy][x + dx] == 1
-            for dz in range(shape_height)  # Iterate through height
-            for dy in range(shape_width)   # Iterate through width
-            for dx in range(1)             # Iterate through depth (always 1 in 2D shape)
+            for dz in range(shape_height)  
+            for dy in range(shape_width)
+            for dx in range(1)
         ):
-            # Mark the used voxel spaces as 0
             for dz in range(shape_height):
                 for dy in range(shape_width):
                     for dx in range(1):
                         voxel[z + dz][y + dy][x + dx] = 0
-            # Return the part ID, its shape, and the covered coordinates
             return ID, shape, [(x + dx, y + dy, z + dz)
                                for dz in range(shape_height)
                                for dy in range(shape_width)
@@ -106,7 +103,6 @@ def legoize(voxel):
     part_list = []
     z_size, y_size, x_size = len(voxel), len(voxel[0]), len(voxel[0][0])
 
-    # Iterate through the voxel grid
     for z in range(z_size):
         for y in range(y_size):
             for x in range(x_size):
@@ -140,7 +136,6 @@ def save_parts_to_csv(parts, file_path, sort_by="location", ascending=True):
         sort_by (str): Sorting criterion. Either "location" or "type".
         ascending (bool): Whether to sort in ascending order (default True).
     """
-    # Sorting logic
     if sort_by == "location":
         # Sort by the first voxel's location in each part (x, y, z)
         sorted_parts = sorted(
@@ -156,12 +151,9 @@ def save_parts_to_csv(parts, file_path, sort_by="location", ascending=True):
     else:
         raise ValueError("Invalid sort_by value. Use 'location' or 'type'.")
 
-    # Write to CSV
     with open(file_path, mode="w", newline="") as file:
         writer = csv.writer(file)
-        # Write the header
         writer.writerow(["Part Type", "Coordinates"])
-        # Write each part's data
         for part in sorted_parts:
             writer.writerow([part[0], part[1]])
 
@@ -170,23 +162,18 @@ def save_parts_to_csv(parts, file_path, sort_by="location", ascending=True):
 
 
 def main():
-    # Read voxel data from the uploaded CSV file
-    voxel_data = read_voxel_data('C:/Users/lando/iCloudDrive/College/Fall 2024/Python (ME 369P)/Project/voxel.csv')
+    voxel_data = read_voxel_data('voxel.csv')
     
-    # Create a 3D voxel grid
     voxel_grid = create_voxel_grid(voxel_data)
     
-    # Convert the voxel grid to LEGO parts
     lego_parts = legoize(voxel_grid)
     
-    # Convert plates to bricks where applicable
     # final_parts = convert_to_bricks(lego_parts)
     
-    # Output the final LEGO parts
     # print("Generated LEGO Parts List:")
     # for part in lego_parts:
     #     print(part)
-    save_parts_to_csv(lego_parts, 'testcsv1')
+    save_parts_to_csv(lego_parts, 'lego_parts.csv')
 
 if __name__ == "__main__":
     main()
