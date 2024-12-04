@@ -16,10 +16,9 @@ def visualize_lego(lego_df):
 
     for idx, row in lego_df.iterrows():
         coordinates_str = row['Coordinates']
-        
         coordinates = ast.literal_eval(coordinates_str)
         color = random.choice(colors)
-        
+
         for (x, y, z) in coordinates:
             plot_cube(ax, x, y, z, dx=1, dy=1, dz=1, color=color)
 
@@ -27,9 +26,12 @@ def visualize_lego(lego_df):
     plt.show()
 
 def load_lego_data(csv_file):
-    lego_df = pd.read_csv(csv_file)
-    return lego_df
+    return pd.read_csv(csv_file)
 
-csv_file = 'lego_parts.csv' 
-lego_df = load_lego_data(csv_file)
-visualize_lego(lego_df)
+def main():
+    csv_file = 'voxel_parts.csv' 
+    lego_df = load_lego_data(csv_file)
+    visualize_lego(lego_df)
+
+if __name__ == "__main__":
+    main()
